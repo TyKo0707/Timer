@@ -78,3 +78,5 @@ def get_historical_candles(interval: str) -> typing.List[Candle]:
     # return candles[-1].open, candles[-1].close, candles[-1].high, candles[-1].volume, f"{date:%Y-%m-%d %H:%M:%S}"
 
     return candles
+
+#
