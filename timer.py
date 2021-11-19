@@ -1,6 +1,7 @@
 import time
 import matplotlib.pyplot as plt
-import functions_for_timer
+import functions_async
+import functions_manual
 
 
 # First timer (easy)
@@ -30,7 +31,7 @@ class Timer:
         if self._start_time is None:
             raise TimerError(f"Timer is not running. Use .start() to start it")
 
-        elapsed_time = round((time.perf_counter() - self._start_time), 4)
+        elapsed_time = round((time.perf_counter() - self._start_time), 8)
         self._start_time = None
 
         if self._counter > len(results):
@@ -46,11 +47,11 @@ class Timer:
 def easy_timer():
     t = Timer()
     t.start()
-    a = functions_for_timer.get_historical_candles('1m')
+    a = functions_async.get_historical_candles('1m')
     t.stop()
 
     t.start()
-    b = functions_for_timer.get_historical_candles_1('1m')
+    b = functions_manual.get_historical_candles('1m')
     t.stop()
 
 
@@ -64,14 +65,14 @@ def repeater(n):
     for i in range(n):
         easy_timer()
         if i == n - 1:
-            avg1 = round(sum(results[0]) / len(results[0]), 5)
+            avg1 = round(sum(results[0]) / len(results[0]), 8)
             y1_es.append(avg1)
-            avg2 = round(sum(results[1]) / len(results[1]), 5)
+            avg2 = round(sum(results[1]) / len(results[1]), 8)
             y2_es.append(avg2)
             print(
                 f'Avarage for first function for {i + 1} repetitions: {avg1} \n'
                 f'Avarage for second function for {i + 1} repetitions: {avg2}')
-            print(f'Full time: {round(max(sum(results[0]), sum(results[1])), 4)} \n')
+            print(f'Full time: {round(max(sum(results[0]), sum(results[1])), 8)} \n')
 
 
 def build_graphic():
@@ -79,7 +80,7 @@ def build_graphic():
     h = 2.54 * max(max(y1_es), max(y2_es))
     plt.figure(figsize=(int(l), int(h)))
     plt.plot(x_es, y1_es, label="async", lw=3)
-    plt.plot(x_es, y2_es, label="minor", lw=3)
+    plt.plot(x_es, y2_es, label="manual", lw=3)
     plt.legend()
     plt.grid(True)
     plt.show()
@@ -91,10 +92,4 @@ if __name__ == "__main__":
     repeater(3)
     repeater(4)
     repeater(5)
-    repeater(10)
-    repeater(15)
-    repeater(20)
-    repeater(25)
-    repeater(30)
-
     build_graphic()
