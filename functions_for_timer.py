@@ -65,7 +65,7 @@ def get_historical_candles(interval: str) -> typing.List[Candle]:
     data = dict()
     data['symbol'] = 'BTCUSDT'
     data['interval'] = interval
-    data['limit'] = 100  # The maximum number of candles is 1000 on Binance Spot
+    data['limit'] = 50  # The maximum number of candles is 1000 on Binance Spot
 
     raw_candles = make_request("GET", "/fapi/v1/klines", data)
 
@@ -115,7 +115,7 @@ def get_historical_candles_1(interval: str) -> typing.List[Candle]:
     data = dict()
     data['symbol'] = 'BTCUSDT'
     data['interval'] = interval
-    data['limit'] = 100  # The maximum number of candles is 1000 on Binance Spot
+    data['limit'] = 50  # The maximum number of candles is 1000 on Binance Spot
 
     raw_candles = _make_request_1("GET", "/fapi/v1/klines", data)
 
